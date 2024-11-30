@@ -1,7 +1,10 @@
-FROM ubuntu:22.04
+FROM python:3.8-slim-buster
 
-RUN apt update -y && apt install -y nano nginx
+WORKDIR /python-docker
 
-EXPOSE 80
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY . .
+
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
